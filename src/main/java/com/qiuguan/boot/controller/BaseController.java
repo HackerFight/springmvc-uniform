@@ -40,7 +40,7 @@ public class BaseController {
     }
 
     /**
-     * @url: https://cloud.tencent.com/developer/article/1952807
+     * @see <a href="https://cloud.tencent.com/developer/article/1952807"></a>
      */
     private static class MyDateEditor extends PropertyEditorSupport {
         @Override
