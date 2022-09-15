@@ -30,6 +30,18 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+        <!--
+         从springboot-2.3开始，校验包被独立成了一个starter组件，所以需要引入validation
+         而springboot-2.3之前的版本只需要引入 web 依赖就可以了。
+
+         JSR303 规范(bean validate), hibernate-validator 是JSR303的实现，spring也做了实现，并支持hibernate-validator
+        -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

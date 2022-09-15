@@ -10,7 +10,9 @@ public enum ApiCodeEnum implements ApiCommonCode {
 
     ERROR(500, "system error"),
 
-    PARAM_ILLEGAL(201, "param illegal");
+    PARAM_ILLEGAL(201, "param illegal"),
+
+    PARAM_MISS(202, "param miss");
 
     private final int code;
 

@@ -8,19 +8,29 @@ import com.qiuguan.boot.enums.ApiCommonCode;
  */
 public class BusinessException extends RuntimeException {
 
-    public BusinessException(String message) {
+    private final ApiCommonCode apiCommonCode;
+
+    public BusinessException(String message, ApiCommonCode apiCommonCode) {
         super(message);
+        this.apiCommonCode = apiCommonCode;
     }
 
     public BusinessException(ApiCommonCode apiCommonCode) {
         super(apiCommonCode.getMessage());
+        this.apiCommonCode = apiCommonCode;
     }
 
-    public BusinessException(String message, Throwable cause) {
+    public BusinessException(String message, Throwable cause, ApiCommonCode apiCommonCode) {
         super(message, cause);
+        this.apiCommonCode = apiCommonCode;
     }
 
-    public BusinessException(Throwable cause) {
+    public BusinessException(Throwable cause, ApiCommonCode apiCommonCode) {
         super(cause);
+        this.apiCommonCode = apiCommonCode;
+    }
+
+    public ApiCommonCode getApiCommonCode() {
+        return apiCommonCode;
     }
 }

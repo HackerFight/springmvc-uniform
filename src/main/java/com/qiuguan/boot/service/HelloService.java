@@ -1,5 +1,7 @@
 package com.qiuguan.boot.service;
 
+import com.qiuguan.boot.enums.ApiCodeEnum;
+import com.qiuguan.boot.enums.ApiCommonCode;
 import com.qiuguan.boot.ex.BusinessException;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class HelloService {
 
     public String helloService(){
-        throw new BusinessException("HelloService 业务异常");
+        System.out.println("hello Service .....");
+        throw new BusinessException("HelloService 业务异常", ApiCodeEnum.ERROR);
     }
 }

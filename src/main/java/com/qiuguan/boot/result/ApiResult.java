@@ -37,10 +37,4 @@ public class ApiResult<T> {
     public static <T> ApiResult<T> fail(ApiCommonCode apiCommonCode){
         return new ApiResult<>(apiCommonCode, null, false);
     }
-
-    public static <T> ApiResult<T> fail(Exception e) {
-        ApiResult<T> apiResult = new ApiResult<>(ApiCodeEnum.ERROR, null, false);
-        apiResult.setMessage(e.getMessage());
-        return apiResult;
-    }
 }
