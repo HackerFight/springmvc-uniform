@@ -3,11 +3,19 @@ package com.qiuguan.boot.config;
 import com.qiuguan.boot.handler.UniformResponseHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,7 +23,7 @@ import java.util.List;
  * @date 2022/09/09 09:25:14  星期五
  */
 @Configuration
-public class MvcConfig {
+public class MvcConfig extends WebMvcConfigurationSupport {
 
     @Bean
     public UniformResponseHandler uniformResponseHandler(RequestMappingHandlerAdapter adapter){
@@ -34,6 +42,34 @@ public class MvcConfig {
         }
 
         return null;
+    }
+
+
+    /**
+     * 添加类型解析器
+     * @param registry
+     */
+    @Override
+    protected void addFormatters(FormatterRegistry registry) {
+        registry.addConverter(new Converter<String, Date>() {
+            @Override
+            public Date convert(String s) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = null;
+                try {
+                    date = format.parse(s);
+                } catch (ParseException e) {
+                    format = new SimpleDateFormat("yyyy-MM-dd");
+                    try {
+                        date = format.parse(s);
+                    } catch (ParseException e1) {
+                    }
+                }
+
+                System.out.println("String ---> Date 解析成功");
+                return date;
+            }
+        });
     }
 
 }
