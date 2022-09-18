@@ -8,5 +8,14 @@ import javax.validation.groups.Default;
  */
 public interface ValidGroup extends Default {
 
+     interface Operate extends ValidGroup {
 
+        interface Add extends Operate {
+
+        }
+
+        interface Update extends Operate {
+
+        }
+    }
 }

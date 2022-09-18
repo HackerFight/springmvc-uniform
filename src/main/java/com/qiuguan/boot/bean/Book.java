@@ -1,6 +1,11 @@
 package com.qiuguan.boot.bean;
 
+import com.qiuguan.boot.group.ValidGroup;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  * @author qiuguan
@@ -12,9 +17,23 @@ import lombok.Data;
 @Data
 public class Book {
 
+    /**
+     * 新增的时候必须为空，修改的时候必须不为空
+     */
+    @Null(groups = ValidGroup.Operate.Add.class)
+    @NotNull(groups = ValidGroup.Operate.Update.class, message = "id must be not null.")
     private Long id;
 
+    /**
+     * 新增的时候必须为空，修改的时候必须不为空
+     */
+    @Null(groups = ValidGroup.Operate.Add.class)
+    @NotNull(groups = ValidGroup.Operate.Update.class, message = "bookId must be not null.")
     private Long bookId;
 
+    /**
+     * 新增的时候都不可以为空
+     */
+    @NotBlank(groups = ValidGroup.Operate.Add.class, message = "name must be not null.")
     private String bookName;
 }
