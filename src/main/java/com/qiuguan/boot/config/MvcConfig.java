@@ -1,13 +1,12 @@
 package com.qiuguan.boot.config;
 
 import com.qiuguan.boot.handler.UniformResponseHandler;
+import com.qiuguan.boot.resolver.EventEnum;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
@@ -62,7 +61,7 @@ public class MvcConfig extends WebMvcConfigurationSupport {
                     format = new SimpleDateFormat("yyyy-MM-dd");
                     try {
                         date = format.parse(s);
-                    } catch (ParseException e1) {
+                    } catch (ParseException ignored) {
                     }
                 }
 
@@ -70,6 +69,14 @@ public class MvcConfig extends WebMvcConfigurationSupport {
                 return date;
             }
         });
+
+        registry.addConverter(new Converter<Integer, EventEnum>() {
+            @Override
+            public EventEnum convert(Integer integer) {
+                return EventEnum.getEventByCode(integer);
+            }
+        });
+
     }
 
 }
