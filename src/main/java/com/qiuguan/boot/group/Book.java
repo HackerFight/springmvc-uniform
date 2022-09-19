@@ -1,4 +1,4 @@
-package com.qiuguan.boot.bean;
+package com.qiuguan.boot.group;
 
 import com.qiuguan.boot.group.ValidGroup;
 import lombok.Data;

@@ -1,6 +1,4 @@
-package com.qiuguan.boot.bean;
-
-import com.qiuguan.boot.resolver.EventEnum;
+package com.qiuguan.boot.convert;
 import lombok.Data;
 
 /**

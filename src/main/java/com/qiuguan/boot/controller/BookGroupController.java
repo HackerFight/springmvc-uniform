@@ -1,13 +1,11 @@
 package com.qiuguan.boot.controller;
 
-import com.qiuguan.boot.bean.Book;
+import com.qiuguan.boot.group.Book;
 import com.qiuguan.boot.group.ValidGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 /**
  * @author qiuguan

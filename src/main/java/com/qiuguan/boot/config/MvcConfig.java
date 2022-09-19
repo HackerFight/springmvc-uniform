@@ -1,7 +1,8 @@
 package com.qiuguan.boot.config;
 
+import com.qiuguan.boot.convert.IntToEnumConvertFactory;
 import com.qiuguan.boot.handler.UniformResponseHandler;
-import com.qiuguan.boot.resolver.EventEnum;
+import com.qiuguan.boot.convert.EventEnum;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -70,12 +71,7 @@ public class MvcConfig extends WebMvcConfigurationSupport {
             }
         });
 
-        registry.addConverter(new Converter<Integer, EventEnum>() {
-            @Override
-            public EventEnum convert(Integer integer) {
-                return EventEnum.getEventByCode(integer);
-            }
-        });
+        registry.addConverterFactory(new IntToEnumConvertFactory());
 
     }
 
