@@ -2,12 +2,14 @@ package com.qiuguan.boot.config;
 
 import com.qiuguan.boot.convert.IntToEnumConvertFactory;
 import com.qiuguan.boot.handler.UniformResponseHandler;
+import com.qiuguan.boot.message.MyJsonHttpMessageConvert;
 import com.qiuguan.boot.resolver.RequestBodyMappingHandlerMethodParamResolver;
 import com.qiuguan.boot.resolver.RequestParamMappingAgreementResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -82,5 +84,10 @@ public class MvcConfig extends WebMvcConfigurationSupport {
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
         argumentResolvers.add(new RequestParamMappingAgreementResolver());
         argumentResolvers.add(new RequestBodyMappingHandlerMethodParamResolver());
+    }
+
+    @Override
+    protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new MyJsonHttpMessageConvert());
     }
 }
