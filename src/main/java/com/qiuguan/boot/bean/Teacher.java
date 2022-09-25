@@ -1,5 +1,6 @@
 package com.qiuguan.boot.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,5 +18,6 @@ public class Teacher {
 
     private Double salary;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
 }
