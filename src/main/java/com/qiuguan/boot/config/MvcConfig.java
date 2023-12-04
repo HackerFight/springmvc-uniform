@@ -3,6 +3,7 @@ package com.qiuguan.boot.config;
 import com.qiuguan.boot.convert.IntToEnumConvertFactory;
 import com.qiuguan.boot.handler.UniformResponseHandler;
 import com.qiuguan.boot.message.MyJsonHttpMessageConvert;
+import com.qiuguan.boot.resolver.MyArgumentParamResolver;
 import com.qiuguan.boot.resolver.RequestBodyMappingHandlerMethodParamResolver;
 import com.qiuguan.boot.resolver.RequestParamMappingAgreementResolver;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodReturnValueHandler;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 
@@ -27,7 +29,34 @@ import java.util.List;
  * @date 2022/09/09 09:25:14  星期五
  */
 @Configuration
-public class MvcConfig extends WebMvcConfigurationSupport {
+public class MvcConfig implements WebMvcConfigurer {
+
+    private List<HttpMessageConverter<?>> converters;
+
+    private List<HttpMessageConverter<?>> converterList;
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new RequestParamMappingAgreementResolver());
+        argumentResolvers.add(new RequestBodyMappingHandlerMethodParamResolver());
+
+
+        /**
+         * 注入 converters 参数
+         *
+         * 用 {@link org.springframework.beans.factory.annotation.Autowired } 注入的 converterList 比  extendMessageConverters 的内容少很多
+         */
+        argumentResolvers.add(new MyArgumentParamResolver(this.converters));
+    }
+
+    @Override
+    public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(new MyJsonHttpMessageConvert());
+
+        this.converters = converters;
+    }
+
+
 
     @Bean
     public UniformResponseHandler uniformResponseHandler(RequestMappingHandlerAdapter adapter){
@@ -54,7 +83,7 @@ public class MvcConfig extends WebMvcConfigurationSupport {
      * @param registry
      */
     @Override
-    protected void addFormatters(FormatterRegistry registry) {
+    public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(new Converter<String, Date>() {
             @Override
             public Date convert(String s) {
@@ -77,17 +106,5 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 
         registry.addConverterFactory(new IntToEnumConvertFactory());
 
-    }
-
-
-    @Override
-    protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new RequestParamMappingAgreementResolver());
-        argumentResolvers.add(new RequestBodyMappingHandlerMethodParamResolver());
-    }
-
-    @Override
-    protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new MyJsonHttpMessageConvert());
     }
 }
